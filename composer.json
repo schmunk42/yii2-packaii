@@ -8,6 +8,9 @@
             "email": "schmunk@usrbin.de"
         }
     ],
+    "autoload": {
+        "psr-4": { "schmunk42\\packageBrowser\\": "" }
+    },
     "require": {
         "knplabs/packagist-api": "1.*"
     }
