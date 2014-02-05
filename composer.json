@@ -1,0 +1,14 @@
+{
+    "name": "schmunk42/yii2-package-browser",
+    "description": "Yii2 Framework Web-UI for browsing composer packages",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Tobias Munk",
+            "email": "schmunk@usrbin.de"
+        }
+    ],
+    "require": {
+
+    }
+}
