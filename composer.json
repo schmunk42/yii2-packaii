@@ -9,6 +9,6 @@
         }
     ],
     "require": {
-
+        "knplabs/packagist-api": "1.*"
     }
 }
