@@ -9,7 +9,9 @@
         }
     ],
     "autoload": {
-        "psr-4": { "schmunk42\\packageBrowser\\": "" }
+        "psr-4": {
+            "schmunk42\\packageBrowser\\": ""
+        }
     },
     "require": {
         "knplabs/packagist-api": "1.*"
