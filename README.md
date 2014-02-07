@@ -1,2 +1,7 @@
-yii2-package-browser
-====================
+Packaii
+=======
+
+Packagist composer package browser for Yii2 Framework
+-----------------------------------------------------
+
+** UNDER DEVELOPMENT **
