@@ -6,7 +6,7 @@
  * Time: 02:26
  */
 
-namespace schmunk42\packageBrowser\components;
+namespace schmunk42\packaii\components;
 
 use \yii\helpers\Html;
 

@@ -1,4 +1,4 @@
-<div class="packageBrowser-default-index">
+<div class="packaii-default-index">
     <h1>Package Browser</h1>
 
     <div class="row">
@@ -12,21 +12,21 @@
                                       'name'        => [
                                           'class'   => '\yii\grid\Column',
                                           'content' => array(
-                                              '\schmunk42\packageBrowser\components\GridFormatter',
+                                              '\schmunk42\packaii\components\GridFormatter',
                                               'name'
                                           )
                                       ],
                                       'description' => [
                                           'class'   => '\yii\grid\Column',
                                           'content' => array(
-                                              '\schmunk42\packageBrowser\components\GridFormatter',
+                                              '\schmunk42\packaii\components\GridFormatter',
                                               'description'
                                           )
                                       ],
                                       'downloads'   => [
                                           'class'   => '\yii\grid\Column',
                                           'content' => array(
-                                              '\schmunk42\packageBrowser\components\GridFormatter',
+                                              '\schmunk42\packaii\components\GridFormatter',
                                               'downloads'
                                           )
                                       ],

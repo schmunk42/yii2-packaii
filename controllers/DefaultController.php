@@ -1,6 +1,6 @@
 <?php
 
-namespace schmunk42\packageBrowser\controllers;
+namespace schmunk42\packaii\controllers;
 
 use yii\caching\DummyCache;
 use yii\data\ArrayDataProvider;
