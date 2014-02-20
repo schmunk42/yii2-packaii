@@ -10,8 +10,14 @@ class DefaultController extends Controller
 {
     const CACHE_KEY = 'schmunk42/yii2-package-browser:package-data';
 
-    public function actionIndex()
+    public function actionIndex($selfupdate = false)
     {
+        if ($selfupdate) {
+            $this->updatePackages();
+            \Yii::$app->session->setFlash('schmunk42.packagii.selfupdate','Package definintions updated.');
+            $this->redirect(['index']);
+        }
+
         $dataProvider                       = new ArrayDataProvider();
         $dataProvider->allModels            = $this->getData();
         $dataProvider->pagination->pageSize = 50;
@@ -35,6 +41,6 @@ class DefaultController extends Controller
         foreach ($packages AS $name) {
             $data[$name] = $client->get($name);
         }
-        \Yii::$app->cache->set(self::CACHE_KEY, $data, 60);
+        \Yii::$app->cache->set(self::CACHE_KEY, $data);
     }
 }
