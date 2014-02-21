@@ -14,6 +14,7 @@
         }
     },
     "require": {
+        "cebe/yii2-gravatar": "1.*",
         "knplabs/packagist-api": "1.*"
     }
 }

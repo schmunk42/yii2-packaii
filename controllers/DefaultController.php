@@ -14,14 +14,22 @@ class DefaultController extends Controller
     {
         if ($selfupdate) {
             $this->updatePackages();
-            \Yii::$app->session->setFlash('schmunk42.packagii.selfupdate','Package definintions updated.');
+            \Yii::$app->session->setFlash('schmunk42.packagii.selfupdate', 'Package definintions updated.');
             $this->redirect(['index']);
         }
 
         $dataProvider                       = new ArrayDataProvider();
         $dataProvider->allModels            = $this->getData();
         $dataProvider->pagination->pageSize = 50;
+
         return $this->render('index', ['dataProvider' => $dataProvider]);
+    }
+
+    public function actionDetail($packagename)
+    {
+        $client = new \Packagist\Api\Client();
+        $data   = $client->get($packagename);
+        echo $this->renderPartial('_detail', ['model' => $data]);
     }
 
     private function getData()
@@ -37,10 +45,25 @@ class DefaultController extends Controller
     private function updatePackages()
     {
         $client   = new \Packagist\Api\Client();
-        $packages = $client->all(['type' => 'yii2-extension']);
-        foreach ($packages AS $name) {
-            $data[$name] = $client->get($name);
+        $packages = $this->getInstalledPackages();
+        $data     = array();
+        foreach ($packages AS $package) {
+            try {
+                $temp       = $package;
+                $temp->info = $client->get($package->name);
+                $data[]     = $temp;
+            } catch (\Exception $e) {
+                echo "TODO: Log message";
+            }
+
         }
         \Yii::$app->cache->set(self::CACHE_KEY, $data);
+    }
+
+
+    private function getInstalledPackages()
+    {
+        $json = file_get_contents(\Yii::getAlias('@root') . '/composer.lock');
+        return json_decode($json)->packages;
     }
 }
