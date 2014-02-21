@@ -15,6 +15,6 @@
     },
     "require": {
         "cebe/yii2-gravatar": "1.*",
-        "knplabs/packagist-api": "1.*"
+        "2amigos/yii2-packagist-component": "*"
     }
 }
