@@ -5,7 +5,7 @@ use \yii\helpers\Html;
 ?>
 
 <h2>
-    <span class="label label-primary"><?= $model->getType() ?></span>
+    <span class="label label-default"><?= $model->getType() ?></span>
     <?= $model->getName() ?>
     <span class="pull-right">
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#install-modal">
@@ -25,7 +25,7 @@ use \yii\helpers\Html;
 
 <div class="">
 
-    <p class="lead">
+    <p>
         <?php
         if (isset($model->getVersions()["dev-master"])) {
             foreach ($model->getVersions()["dev-master"]->getKeywords() AS $word) {
@@ -35,67 +35,80 @@ use \yii\helpers\Html;
         ?>
     </p>
 
-    <p class="lead">
-        <?= $model->getDescription() ?>
-    </p>
-
-    <h5>Versions</h5>
 
     <p>
-        <?php
+        <!-- Nav tabs -->
+    <ul class="nav nav-pills">
+        <li class="active"><a href="#info-panel" data-toggle="pill">Info</a></li>
+        <li><a href="#versions-panel" data-toggle="pill">Versions</a></li>
+    </ul>
 
-        foreach ($model->getVersions() AS $version) {
-            #$activeVersion = ($model->version == $version->getVersion()) ? true : false;
-            $activeVersion = false;
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="info-panel">
+            <p>
 
-            $labelClass = 'label-default';
-            if (substr($version->getVersion(), 0, 3) == 'dev') {
-                $labelClass = "label-warning";
-            }
-            # elseif (version_compare($model->version, $version->getVersion()) == -1) {
-            #   $labelClass = "label-info";
-            #}
-            $labelClass = ($activeVersion) ? 'label-primary' : $labelClass;
+            </p>
 
-            echo "<span class='label $labelClass'>";
-            echo $version->getVersion();
-            echo "</span> ";
-        };
+            <p class="lead">
+                <?= $model->getDescription() ?>
+            </p>
 
-        ?>
+            <pre><?= var_dump($model); ?></pre>
+        </div>
+        <div class="tab-pane" id="versions-panel">
+            <p></p>
+            <p>
+                <?php
+
+                foreach ($model->getVersions() AS $version) {
+                    #$activeVersion = ($model->version == $version->getVersion()) ? true : false;
+                    $activeVersion = false;
+
+                    $labelClass = 'label-default';
+                    if (substr($version->getVersion(), 0, 3) == 'dev') {
+                        $labelClass = "label-warning";
+                    }
+                    # elseif (version_compare($model->version, $version->getVersion()) == -1) {
+                    #   $labelClass = "label-info";
+                    #}
+                    $labelClass = ($activeVersion) ? 'label-primary' : $labelClass;
+
+                    echo "<span class='label $labelClass'>";
+                    echo $version->getVersion();
+                    echo "</span> ";
+                };
+
+                ?>
+            </p>
+            <hr/>
+            <h5>Maintainers</h5>
+                <?php
+                foreach ($model->getMaintainers() AS $person) {
+                    echo "<p>";
+                    echo Html::a(
+                             \cebe\gravatar\Gravatar::widget(
+                                                    [
+                                                    'email'   => $person->getEmail(),
+                                                    'options' => [
+                                                        'alt' => $person->getName()
+                                                    ],
+                                                    'size'    => 32
+                                                    ]
+                             ),
+                                 $person->getHomepage()
+                    );
+                    echo " " . $person->getName();
+                    echo "</p>";
+                }
+                ?>
+        </div>
+    </div>
+
+
     </p>
 
 
-    <h5>Maintainers</h5>
-
-    <p class="lead">
-        <?php
-        foreach ($model->getMaintainers() AS $person) {
-            echo Html::a(
-                     \cebe\gravatar\Gravatar::widget(
-                                            [
-                                            'email'   => $person->getEmail(),
-                                            'options' => [
-                                                'alt' => $person->getName()
-                                            ],
-                                            'size'    => 32
-                                            ]
-                     ),
-                         $person->getHomepage()
-            );
-            echo " " . $person->getName() . " ";
-        }
-        ?>
-    </p>
-
-
-    <h5>Readme</h5>
-    <p>
-        tbd
-    </p>
-
-    <h5>Debug</h5>
-    <pre><?= var_dump($model); ?></pre>
 </div>
 
 <!-- Modal -->
