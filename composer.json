@@ -13,14 +13,8 @@
             "schmunk42\\packaii\\": ""
         }
     },
-    "repositories":[
-        {
-            "type": "git",
-            "url": "https://github.com/2amigos/yii2-packagist-component.git"
-        }
-    ],
     "require": {
         "cebe/yii2-gravatar": "1.*",
-        "2amigos/yii2-packagist-component": "dev-master"
+        "2amigos/yii2-packagist-component": "1.0.*"
     }
 }
