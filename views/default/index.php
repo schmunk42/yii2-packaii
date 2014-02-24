@@ -9,7 +9,7 @@
 	</h1>
 
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<p>
 			<?= \yii\bootstrap\Tabs::widget([
 				'items' => [
@@ -24,7 +24,7 @@
 				]
 			]);?>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-9">
 			<div style="min-height: 40px">
 				<div class="progress progress-striped hide">
 					<div class="progress-bar" role="progressbar" style="width: 0%;"></div>
