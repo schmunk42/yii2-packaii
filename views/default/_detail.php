@@ -22,7 +22,8 @@ use \yii\helpers\Html;
 
 <div class="">
 	<p>
-		<?= '<span class="label label-default">' . implode("</span> <span class='label label-success'>", $model->keywords) . '</span>'; ?>
+		<?php # TODO: fix model, return keywords from current version ?>
+        <?= '<span class="label label-default">' . implode("</span> <span class='label label-success'>", reset($model->packagistInfo->versions)->keywords) . '</span>'; ?>
 	</p>
 	<p>
 	<!-- Nav tabs -->
@@ -50,7 +51,8 @@ use \yii\helpers\Html;
 			<hr/>
 			<h5>Maintainers</h5>
 			<?php
-			foreach ($model->authors AS $author) {
+            // TODO: remove isset(), $model->author undefined for yiisoft/jquery
+			if (isset($model->authors)) foreach ($model->authors AS $author) {
 				echo "<p>";
 				if(isset($author->email))
 				{

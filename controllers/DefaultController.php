@@ -41,12 +41,25 @@ class DefaultController extends Controller
     {
         $model   = $this->module->manager->getInstalledPackageDetail($name);
 		if($model == null) {
-			$model = $this->module->manager->getPackageDetail($name);
-			$readme = $this->module->manager->getPackageReadme($model);
-			$view = '_packagist_detail';
-		} else {
-			$readme = $this->module->manager->getInstalledPackageReadme($model);
-			$view = '_detail';
+            $model  = $this->module->manager->getPackageDetail($name);
+            $readme = $this->module->manager->getPackageReadme($model);
+            $view   = '_packagist_detail';
+        } else {
+            // TODO: HORRIBLE !
+            // TODO:
+            // TODO: RE-MOVE THIS CO-DE (!!!!!)
+            try {
+                try {
+                    $readme = $this->module->manager->getInstalledPackageReadme($model);
+                } catch (\Guzzle\Http\Exception\ClientErrorResponseException $e) {
+                    echo "<div class='alert alert-danger'>Package README not available</div>";
+                    $readme = '';
+                }
+            } catch (\yii\base\ErrorException $e) {
+                echo "<div class='alert alert-danger'>Package info not available from packagist.org</div>";
+                return;
+            }
+            $view = '_detail';
 		}
         echo $this->renderPartial($view, ['model' => $model, 'readme' => $readme]);
     }
