@@ -61,17 +61,13 @@ class Result extends Base
 		}
 
 		$query = new ArrayQuery($models);
+
 		$dataProvider->allModels = $query
 			->addCondition('name', 'like ' . $this->name)
+			->addCondition('description', 'like ' . $this->description)
+			->addCondition('downloads', $this->downloads)
+			->addCondition('favers', $this->favers)
 			->find();
-
-		$this->addCondition('name', true);
-		$this->addCondition('description', true);
-		$this->addCondition('url', true);
-		$this->addCondition('downloads');
-		$this->addCondition('favers');
-
-		$dataProvider->allModels = $this->getFilter()->filter($models);
 
 		return $dataProvider;
 	}
