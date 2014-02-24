@@ -2,68 +2,53 @@
 
 namespace schmunk42\packaii\controllers;
 
-use yii\caching\DummyCache;
-use yii\data\ArrayDataProvider;
+use schmunk42\packaii\models\search\InstalledPackage;
+use schmunk42\packaii\models\search\Package;
 use yii\web\Controller;
 
 class DefaultController extends Controller
 {
-    const CACHE_KEY = 'schmunk42/yii2-package-browser:package-data';
 
-    public function actionIndex($selfupdate = false)
+    public function actionIndex()
     {
-        if ($selfupdate) {
-            $this->updatePackages();
-            \Yii::$app->session->setFlash('schmunk42.packagii.selfupdate', 'Package definintions updated.');
-            $this->redirect(['index']);
-        }
+        $installedModel = new InstalledPackage();
+		$dataProvider = $installedModel->search([], $this->module->manager->getInstalledPackages());
 
-        $dataProvider                       = new ArrayDataProvider();
-        $dataProvider->allModels            = $this->getData();
-        $dataProvider->pagination->pageSize = 50;
+		$packageModel = new Package();
+		$packagistDataProvider = $packageModel->search([], []);
 
-        return $this->render('index', ['dataProvider' => $dataProvider]);
+        return $this->render('index', ['dataProvider' => $dataProvider, 'packagistDataProvider' => $packagistDataProvider]);
     }
 
-    public function actionDetail($packagename)
+	public function actionSearchInstalled()
+	{
+		$searchModel = new InstalledPackage();
+		$dataProvider = $searchModel->search($_GET, $this->module->manager->getInstalledPackages());
+
+		return $this->renderPartial('_package_list', ['dataProvider' => $dataProvider]);
+	}
+
+	public function actionSearchPackagist()
+	{
+		$packageModel = new Package();
+
+		$dataProvider = $packageModel->search($_GET, []);
+
+		return $this->renderPartial('_package_list', ['dataProvider' => $dataProvider]);
+	}
+
+    public function actionDetail($name)
     {
-        $client = new \Packagist\Api\Client();
-        $data   = $client->get($packagename);
-        echo $this->renderPartial('_detail', ['model' => $data]);
+        $model   = $this->module->manager->getInstalledPackageDetail($name);
+		if($model == null) {
+			$model = $this->module->manager->getPackageDetail($name);
+			$readme = $this->module->manager->getPackageReadme($model);
+			$view = '_packagist_detail';
+		} else {
+			$readme = $this->module->manager->getInstalledPackageReadme($model);
+			$view = '_detail';
+		}
+        echo $this->renderPartial($view, ['model' => $model, 'readme' => $readme]);
     }
 
-    private function getData()
-    {
-        $data = \Yii::$app->cache->get(self::CACHE_KEY);
-        if ($data === false) {
-            $this->updatePackages();
-            $data = \Yii::$app->cache->get(self::CACHE_KEY);
-        }
-        return $data;
-    }
-
-    private function updatePackages()
-    {
-        $client   = new \Packagist\Api\Client();
-        $packages = $this->getInstalledPackages();
-        $data     = array();
-        foreach ($packages AS $package) {
-            try {
-                $temp       = $package;
-                $temp->info = $client->get($package->name);
-                $data[]     = $temp;
-            } catch (\Exception $e) {
-                echo "TODO: Log message";
-            }
-
-        }
-        \Yii::$app->cache->set(self::CACHE_KEY, $data);
-    }
-
-
-    private function getInstalledPackages()
-    {
-        $json = file_get_contents(\Yii::getAlias('@root') . '/composer.lock');
-        return json_decode($json)->packages;
-    }
 }

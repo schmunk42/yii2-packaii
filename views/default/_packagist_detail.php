@@ -1,31 +1,27 @@
 <?php
 use \yii\helpers\Html;
+
 ?>
+
 <h2>
 	<span class="label label-default"><?= $model->type ?></span>
 	<?= $model->name ?>
-	<span class="pull-right">
-		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#install-modal">
-			<span class="glyphicon glyphicon-download-alt"></span></button>
-		<button type="submit" class="btn btn-success" data-toggle="modal" data-target="#update-modal">
-			<?= $model->version; ?>
-			<span class="glyphicon glyphicon-download"></span>
-		</button>
-		<button type="submit" class="btn btn-default" data-toggle="modal" data-target="#configure-modal">
-			<span class="glyphicon glyphicon-cog"></span>
-		</button>
-		<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#remove-modal">
-			<span class="glyphicon glyphicon-remove"></span>
-		</button>
-    </span>
 </h2>
-
 <div class="">
 	<p>
-		<?= '<span class="label label-default">' . implode("</span> <span class='label label-success'>", $model->keywords) . '</span>'; ?>
+		<?= '<span class="label label-default">' . implode("</span> <span class='label label-success'>", current($model->versions)->keywords) . '</span>'; ?>
 	</p>
+	<hr/>
+	<h5>Downloads</h5>
+
 	<p>
-	<!-- Nav tabs -->
+		<span class="label label-warning">Overall</span> <?= $model->downloads->total ?> installs<br/>
+		<span class="label label-warning">This month</span> <?= $model->downloads->monthly ?> monthly downloads<br/>
+		<span class="label label-warning">Today</span> <?= $model->downloads->daily ?> daily downloads<br/>
+	</p>
+	<hr/>
+	<p>
+		<!-- Nav tabs -->
 	<ul class="nav nav-pills">
 		<li class="active">
 			<a href="#info-panel" data-toggle="pill">Info</a>
@@ -39,43 +35,70 @@ use \yii\helpers\Html;
 	<div class="tab-content">
 		<div class="tab-pane active" id="info-panel">
 			<p></p>
-			<?php if(isset($model->homepage)):?>
-			<p>
-				<span class="glyphicon glyphicon-globe"></span> <?=$model->homepage?>
-			</p>
-			<?php endif;?>
+
 			<p class="lead">
 				<?= $model->description ?>
 			</p>
 			<hr/>
 			<h5>Maintainers</h5>
 			<?php
-			foreach ($model->authors AS $author) {
+			foreach ($model->maintainers AS $author) {
 				echo "<p>";
-				if(isset($author->email))
-				{
+				if ($author->email) {
 					echo Html::a(
 						\cebe\gravatar\Gravatar::widget(
 							[
 								'email' => $author->email,
+								'defaultImage' => 'monsterid',
 								'options' => [
 									'alt' => (isset($author->name) ? $author->name : '')
 								],
 								'size' => 32
 							]
 						),
-						(isset($author->homepage) ? $author->homepage : '#')
+						($author->homepage ? $author->homepage : '#')
 					);
 				}
-				echo " " . (isset($author->name) ? $author->name : '');
+				echo " " . ($author->name ? $author->name : '');
 				echo "</p>";
 			}
 			?>
+			<hr/>
+			<h5>Versions</h5>
+
+			<div class="row">
+				<?php foreach ($model->versions as $version => $info): ?>
+					<div class="col-xs-6 col-md-6">
+						<h4><?= $version ?>
+							<small><?= implode(", ", $info->license) ?></small>
+						</h4>
+						<small><?= $info->time ?></small>
+
+						<?php
+						foreach ($info->authors AS $author) {
+							echo "<p>";
+							echo($author->name ? $author->name : '');
+							if ($author->email) {
+
+								echo " <" .
+									Html::a(
+										$author->email,
+										($author->homepage ? $author->homepage : '#')
+									)
+									. ">";
+							}
+							echo "</p>";
+						}
+						?>
+					</div>
+				<?php endforeach; ?>
+			</div>
+			<hr/>
 		</div>
 		<div class="tab-pane" id="readme-panel">
 			<p></p>
 			<p>
-				<?= \yii\helpers\Markdown::process(base64_decode(\yii\helpers\ArrayHelper::getValue($readme, 'content', '')), 'gfm');?>
+				<?= \yii\helpers\Markdown::process(base64_decode(\yii\helpers\ArrayHelper::getValue($readme, 'content', '')), 'gfm'); ?>
 			</p>
 		</div>
 	</div>
@@ -115,14 +138,12 @@ use \yii\helpers\Html;
 				<p>
 					To install this extension please use the following commands
 				</p>
-
 				<p>
 					<code>
 						cd <?= realpath(\Yii::getAlias('@root')) ?><br/>
 						composer.phar require <?= $model->name ?>
 					</code>
 				</p>
-
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -142,9 +163,7 @@ use \yii\helpers\Html;
 				<p>
 					To update this extension please use the following commands
 				</p>
-
 				<p>
-
 					<code>
 						cd <?= realpath(\Yii::getAlias('@root')) ?><br/>
 						composer.phar update <?= $model->name ?>
@@ -157,8 +176,7 @@ use \yii\helpers\Html;
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="remove-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	 aria-hidden="true">
+<div class="modal fade" id="remove-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -169,18 +187,15 @@ use \yii\helpers\Html;
 				<p>
 					To install this extension please use the following commands
 				</p>
-
 				<p>
 					<code>
 						cd <?= realpath(\Yii::getAlias('@root')) ?><br/>
 						edit composer.json
 					</code>
 				</p>
-
 				<p>
 					And update your application
 				</p>
-
 				<p>
 					<code>
 						composer.phar update
