@@ -6,6 +6,11 @@
         {
             "name": "Tobias Munk",
             "email": "schmunk@usrbin.de"
+        },
+        {
+            "name": "Antonio Ramirez",
+            "email": "ramirez.cobos@gmail.com",
+            "homepage": "http://2amigos.us"
         }
     ],
     "autoload": {
@@ -15,6 +20,7 @@
     },
     "require": {
         "cebe/yii2-gravatar": "1.*",
-        "2amigos/yii2-packagist-component": "0.1.*"
+        "2amigos/yii2-packagist-component": "0.1.*",
+        "2amigos/yii2-arrayquery-component": "0.1.*"
     }
 }
