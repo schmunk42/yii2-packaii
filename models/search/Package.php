@@ -62,9 +62,13 @@ class Package extends Base
 		if (!($this->load($params) && $this->validate())) {
 			return $dataProvider;
 		}
-		$api = new Packagist();
-		$response = $api->search($this->name, ['tags' => ['yii2-extension']])->getResponse();
-		$dataProvider->allModels = $response->getBody();
+
+		if(!empty($this->name))
+		{
+			$api = new Packagist();
+			$response = $api->search($this->name, ['tags' => ['yii2-extension']])->getResponse();
+			$dataProvider->allModels = $response->getBody();
+		}
 
 		return $dataProvider;
 	}

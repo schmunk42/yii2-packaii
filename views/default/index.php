@@ -40,7 +40,7 @@
                     <span class="pull-right">
                         <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#update-modal">
 							Update Application
-							<span class="glyphicon glyphicon-download"></span>
+							<span class="glyphicon glyphicon-upload"></span>
 						</button>
                     </span>
 			</h2>
@@ -49,7 +49,15 @@
 				<?= \Yii::$app->getModule('packaii')->manager->getDevPackagesCount(); ?> Dev-Packages,
 				Composer Hash: <?= \Yii::$app->getModule('packaii')->manager->getComposerLockHash(); ?>
 			</p>
-
+			<?php if (!\Yii::$app->getModule('packaii')->gitHubUsername || !\Yii::$app->getModule('packaii')->gitHubPassword):?>
+				<?= $this->render('_alert', [
+					'type' => 'warning',
+					'message' => '<strong>Important</strong> <p>In order to avoid github calls limitations, it is recommended
+					that you configure <strong>Packaii::gitHubUsernanme</strong> and <strong>Packaii::gitHubPassword</strong>
+					module on your config file.</p> <br> More information on ' .
+						\yii\helpers\Html::a('GitHub Developer', 'https://developer.github.com/changes/2012-10-14-rate-limit-changes/')
+				]);?>
+			<?php endif;?>
 			<?php \yii\widgets\Pjax::end(); ?>
 		</div>
 	</div>

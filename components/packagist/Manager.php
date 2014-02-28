@@ -77,9 +77,9 @@ class Manager extends Component
 	 */
 	public function getComposerLockContents($json = true)
 	{
-		if($this->_composer_lock_contents == null) {
+		if ($this->_composer_lock_contents == null) {
 			$path = $this->getComposerLockPath();
-			if(file_exists($path)) {
+			if (file_exists($path)) {
 				$this->_composer_lock_contents = file_get_contents($path);
 			}
 		}
@@ -143,13 +143,13 @@ class Manager extends Component
 
 				foreach ($this->_installed_packages as &$package) {
 					foreach ($this->getRequiredPackageNames() as $name => $version) {
-						if(strcasecmp($package->name, $name) === 0) {
+						if (strcasecmp($package->name, $name) === 0) {
 							// should we set the versions too ?
 							$package->isRequired = true;
 						}
 					}
-					foreach($this->getRequiredDevPackageNames() as $name => $version) {
-						if(strcasecmp($package->name, $name) === 0) {
+					foreach ($this->getRequiredDevPackageNames() as $name => $version) {
+						if (strcasecmp($package->name, $name) === 0) {
 							// should we set the versions too ?
 							$package->isRequiredDev = true;
 						}
@@ -172,7 +172,7 @@ class Manager extends Component
 	public function getInstalledPackageDetail($name)
 	{
 		$packages = \Yii::$app->cache->get($this->cacheKey)
-			? unserialize(\Yii::$app->cache->get($this->cacheKey) )
+			? unserialize(\Yii::$app->cache->get($this->cacheKey))
 			: $this->getInstalledPackages();
 		return ArrayHelper::getValue($packages, $name);
 	}
@@ -201,13 +201,20 @@ class Manager extends Component
 	 */
 	public function getInstalledPackageReadme(&$package)
 	{
-		if (!isset($package->packagistInfo)) {
-			$info = $this->getPackagistClient()->package($package->name)->getResponse()->getBody();
-			$this->getInstalledPackages();
-			$package->packagistInfo = $this->_installed_packages[$package->name]->packagistInfo = $info;
-			$this->updateCache();
+		try
+		{
+			if (!isset($package->packagistInfo)) {
+				$info = $this->getPackagistClient()->package($package->name)->getResponse()->getBody();
+				$this->getInstalledPackages();
+				$package->packagistInfo = $this->_installed_packages[$package->name]->packagistInfo = $info;
+				$this->updateCache();
+			}
+			$readme = $package->packagistInfo->getReadme($this->gitHubUsername, $this->gitHubPassword);
+
+		} catch( \Exception $e) {
+			$readme = null;
 		}
-		return $package->packagistInfo->getReadme($this->gitHubUsername, $this->gitHubPassword);
+		return $readme;
 	}
 
 	/**
@@ -215,7 +222,8 @@ class Manager extends Component
 	 * @param $name
 	 * @return \dosamigos\packagist\Package
 	 */
-	public function getPackageDetail($name) {
+	public function getPackageDetail($name)
+	{
 		return $this->getPackagistClient()->package($name)->getResponse()->getBody();
 	}
 
@@ -225,8 +233,14 @@ class Manager extends Component
 	 * @param $package
 	 * @return array
 	 */
-	public function getPackageReadme(&$package){
-		return $package->getReadme($this->gitHubUsername, $this->gitHubPassword);
+	public function getPackageReadme(&$package)
+	{
+		try {
+			$readme = $package->getReadme($this->gitHubUsername, $this->gitHubPassword);
+		} catch (\Exception $e) {
+			$readme = null;
+		}
+		return $readme;
 	}
 
 	/**
@@ -262,7 +276,7 @@ class Manager extends Component
 	 */
 	public function getPackagistClient()
 	{
-		if($this->_packagist === null) {
+		if ($this->_packagist === null) {
 			$this->_packagist = new Packagist();
 		}
 		return $this->_packagist;
@@ -283,7 +297,8 @@ class Manager extends Component
 	 * @param string $key the key name
 	 * @return array
 	 */
-	protected function getInstalledPackageValueByKey($key) {
+	protected function getInstalledPackageValueByKey($key)
+	{
 		$required = [];
 		foreach ($this->getInstalledPackages() as $package) {
 			$required = ArrayHelper::merge($required, (isset($package->$key) ? $package->$key : []));

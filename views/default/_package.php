@@ -1,6 +1,6 @@
 <?php
 use \yii\helpers\Html;
-
+$version = property_exists($model, 'version') ? $model->version : null;
 ?>
 <h5>
     <?php if (Yii::$app->getModule('packaii')->manager->getIsInstalled($model->name)): ?>
@@ -11,7 +11,7 @@ use \yii\helpers\Html;
     <?php if (isset($model->isRequiredDev)): ?>
         <span class="label label-important">dev</span>
     <?php endif; ?>
-    <?= Html::a($model->name, Html::url(['detail', 'name' => $model->name]), ['class' => 'package-link']) ?>
+    <?= Html::a($model->name, Html::url(['detail', 'name' => $model->name, 'version' => $version]), ['class' => 'package-link']) ?>
 </h5>
 <div>
     <small>

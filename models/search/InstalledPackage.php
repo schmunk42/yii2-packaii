@@ -84,10 +84,13 @@ class InstalledPackage extends Base
 			return $dataProvider;
 		}
 
-		$query = new ArrayQuery($models);
-		$dataProvider->allModels = $query
-			->addCondition('name', 'like ' . $this->name)
-			->find();
+		if(!empty($this->name))
+		{
+			$query = new ArrayQuery($models);
+			$dataProvider->allModels = $query
+				->addCondition('name', 'like ' . $this->name)
+				->find();
+		}
 
 		return $dataProvider;
 	}

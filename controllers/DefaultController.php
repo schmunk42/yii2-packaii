@@ -2,6 +2,7 @@
 
 namespace schmunk42\packaii\controllers;
 
+use dosamigos\pjaxfilter\PjaxFilter;
 use schmunk42\packaii\models\search\InstalledPackage;
 use schmunk42\packaii\models\search\Package;
 use yii\web\Controller;
@@ -9,16 +10,30 @@ use yii\web\Controller;
 class DefaultController extends Controller
 {
 
-    public function actionIndex()
-    {
-        $installedModel = new InstalledPackage();
+//	public function behaviors()
+//	{
+////		return [
+////			'pjax' => [
+////				'class' => PjaxFilter::className(),
+////				'actions' => ['*' => ['url' => ['index']]],
+////				'exclude' => ['index', 'detail']
+////			]
+////		];
+//	}
+
+	public function actionIndex()
+	{
+		$installedModel = new InstalledPackage();
 		$dataProvider = $installedModel->search([], $this->module->manager->getInstalledPackages());
 
 		$packageModel = new Package();
 		$packagistDataProvider = $packageModel->search([], []);
 
-        return $this->render('index', ['dataProvider' => $dataProvider, 'packagistDataProvider' => $packagistDataProvider]);
-    }
+		return $this->render('index', [
+			'dataProvider' => $dataProvider,
+			'packagistDataProvider' => $packagistDataProvider
+		]);
+	}
 
 	public function actionSearchInstalled()
 	{
@@ -30,38 +45,36 @@ class DefaultController extends Controller
 
 	public function actionSearchPackagist()
 	{
-		$packageModel = new Package();
+		try {
+			$packageModel = new Package();
+			$dataProvider = $packageModel->search($_GET, []);
+		} catch (Exception $e) {
+			die($e);
+		}
 
-		$dataProvider = $packageModel->search($_GET, []);
 
 		return $this->renderPartial('_package_list', ['dataProvider' => $dataProvider]);
 	}
 
-    public function actionDetail($name)
-    {
-        $model   = $this->module->manager->getInstalledPackageDetail($name);
-		if($model == null) {
-            $model  = $this->module->manager->getPackageDetail($name);
-            $readme = $this->module->manager->getPackageReadme($model);
-            $view   = '_packagist_detail';
-        } else {
-            // TODO: HORRIBLE !
-            // TODO:
-            // TODO: RE-MOVE THIS CO-DE (!!!!!)
-            try {
-                try {
-                    $readme = $this->module->manager->getInstalledPackageReadme($model);
-                } catch (\Guzzle\Http\Exception\ClientErrorResponseException $e) {
-                    echo "<div class='alert alert-danger'>Package README not available</div>";
-                    $readme = '';
-                }
-            } catch (\yii\base\ErrorException $e) {
-                echo "<div class='alert alert-danger'>Package info not available from packagist.org</div>";
-                return;
-            }
-            $view = '_detail';
+	public function actionDetail($name)
+	{
+		$model = $this->module->manager->getInstalledPackageDetail($name);
+		$version = \Yii::$app->getRequest()->getQueryParam('version');
+		if ($model == null) {
+			$model = $this->module->manager->getPackageDetail($name);
+			$readme = $this->module->manager->getPackageReadme($model);
+			$view = '_packagist_detail';
+		} else {
+			$readme = $this->module->manager->getInstalledPackageReadme($model);
+			$view = '_detail';
 		}
-        echo $this->renderPartial($view, ['model' => $model, 'readme' => $readme]);
-    }
+		if ($readme == null) {
+			return $this->renderpartial('_alert', [
+				'type' => 'warning',
+				'message' => 'Package README file not available for <strong>' . $name . '</strong>'
+			]);
+		}
+		return $this->renderPartial($view, ['model' => $model, 'readme' => $readme, 'version' => $version]);
+	}
 
 }
