@@ -10,16 +10,16 @@ use yii\web\Controller;
 class DefaultController extends Controller
 {
 
-//	public function behaviors()
-//	{
-////		return [
-////			'pjax' => [
-////				'class' => PjaxFilter::className(),
-////				'actions' => ['*' => ['url' => ['index']]],
-////				'exclude' => ['index', 'detail']
-////			]
-////		];
-//	}
+	public function behaviors()
+	{
+		return [
+			'pjax' => [
+				'class' => PjaxFilter::className(),
+				'actions' => ['*' => ['url' => ['index']]],
+				'exclude' => ['index']
+			]
+		];
+	}
 
 	public function actionIndex()
 	{

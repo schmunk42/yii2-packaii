@@ -1,7 +1,10 @@
 <?php
 use \yii\helpers\Html;
+use \yii\helpers\ArrayHelper;
+use \yii\helpers\Markdown;
+use \cebe\gravatar\Gravatar;
 
-$version = \yii\helpers\ArrayHelper::getValue($model->packagistInfo->versions, $version, reset($model->packagistInfo->versions));
+$version = ArrayHelper::getValue($model->packagistInfo->versions, $version, reset($model->packagistInfo->versions));
 ?>
 
 <div class="row">
@@ -11,7 +14,7 @@ $version = \yii\helpers\ArrayHelper::getValue($model->packagistInfo->versions, $
 		</h2>
 		<p class="lead">
 			<?= $model->description ?>
-			<?php if (isset($model->homepage)): ?> d
+			<?php if (isset($model->homepage)): ?>
 				<div>
 					<span class="glyphicon glyphicon-globe"></span> <?= Html::a($model->homepage, $model->homepage); ?>
 				</div>
@@ -31,8 +34,8 @@ $version = \yii\helpers\ArrayHelper::getValue($model->packagistInfo->versions, $
 			</div>
 			<div class="panel-body">
 				<?=
-				\yii\helpers\Markdown::process(
-					base64_decode(\yii\helpers\ArrayHelper::getValue($readme, 'content', '')),
+				Markdown::process(
+					base64_decode(ArrayHelper::getValue($readme, 'content', '')),
 					'gfm'
 				); ?>
 			</div>
@@ -70,7 +73,7 @@ $version = \yii\helpers\ArrayHelper::getValue($model->packagistInfo->versions, $
 				echo "<p>";
 				if (isset($author->email)) {
 					echo Html::a(
-						\cebe\gravatar\Gravatar::widget(
+							Gravatar::widget(
 							[
 								'email' => $author->email,
 								'options' => [
@@ -90,114 +93,5 @@ $version = \yii\helpers\ArrayHelper::getValue($model->packagistInfo->versions, $
 	</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="configure-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	 aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Configure <?= $model->name ?></h4>
-			</div>
-			<div class="modal-body">
-				<p>
-					tbd
-				</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="install-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	 aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Install <?= $model->name ?></h4>
-			</div>
-			<div class="modal-body">
-				<p>
-					To install this extension please use the following commands
-				</p>
-
-				<p>
-					<code>
-						cd <?= realpath(\Yii::getAlias('@root')) ?><br/>
-						composer.phar require <?= $model->name ?>
-					</code>
-				</p>
-
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="modal fade" id="update-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	 aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Update <?= $model->name ?></h4>
-			</div>
-			<div class="modal-body">
-				<p>
-					To update this extension please use the following commands
-				</p>
-
-				<p>
-
-					<code>
-						cd <?= realpath(\Yii::getAlias('@root')) ?><br/>
-						composer.phar update <?= $model->name ?>
-					</code>
-				</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="modal fade" id="remove-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-	 aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Remove <?= $model->name ?></h4>
-			</div>
-			<div class="modal-body">
-				<p>
-					To install this extension please use the following commands
-				</p>
-
-				<p>
-					<code>
-						cd <?= realpath(\Yii::getAlias('@root')) ?><br/>
-						edit composer.json
-					</code>
-				</p>
-
-				<p>
-					And update your application
-				</p>
-
-				<p>
-					<code>
-						composer.phar update
-					</code>
-				</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
+<!-- Modals -->
+<?= $this->render('_modals', ['name' => $model->name]);

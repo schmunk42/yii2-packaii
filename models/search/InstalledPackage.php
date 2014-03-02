@@ -1,6 +1,6 @@
 <?php
-namespace schmunk42\packaii\models\search;
 
+namespace schmunk42\packaii\models\search;
 
 use dosamigos\arrayquery\ArrayQuery;
 use yii\data\ArrayDataProvider;
