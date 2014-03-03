@@ -3,6 +3,7 @@ use \yii\bootstrap\Tabs;
 use \yii\widgets\Pjax;
 use \yii\helpers\Html;
 ?>
+<div class="container">
 	<div class="packaii-default-index">
 		<h1>Packaii
 			<small>composer package browser</small>
@@ -26,11 +27,10 @@ use \yii\helpers\Html;
 					]);?>
 			</div>
 			<div class="col-md-9">
-				<div style="min-height: 40px">
-					<div class="progress progress-striped hide">
+
+					<div class="progress progress-striped invisible">
 						<div class="progress-bar" role="progressbar" style="width: 0%;"></div>
 					</div>
-				</div>
 				<?php Pjax::begin([
 					'id' => 'detail-panel',
 					'linkSelector' => 'a.package-link',
@@ -38,18 +38,35 @@ use \yii\helpers\Html;
 				]);?>
 				<h2>
 					Repository Statistics
+                    <!-- TODO: reimplement update modal
                     <span class="pull-right">
                         <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#update-modal">
 							Update Application
 							<span class="glyphicon glyphicon-upload"></span>
 						</button>
                     </span>
+                    -->
 				</h2>
-				<p class="well">
-					<?= \Yii::$app->getModule('packaii')->manager->getInstalledPackagesCount(); ?> Packages,
-					<?= \Yii::$app->getModule('packaii')->manager->getDevPackagesCount(); ?> Dev-Packages,
-					Composer Hash: <?= \Yii::$app->getModule('packaii')->manager->getComposerLockHash(); ?>
-				</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="well lead">
+                        Composer Hash: <?= \Yii::$app->getModule('packaii')->manager->getComposerLockHash(); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="well lead">
+                            <?= \Yii::$app->getModule('packaii')->manager->getInstalledPackagesCount(); ?> Packages
+                        </p>
+
+                    </div>
+                    <div class="col-md-6">
+                        <p class="well lead">
+                            <?= \Yii::$app->getModule('packaii')->manager->getDevPackagesCount(); ?> Dev-Packages
+                        </p>
+                    </div>
+                </div>
 				<?php if (!\Yii::$app->getModule('packaii')->gitHubUsername || !\Yii::$app->getModule('packaii')->gitHubPassword): ?>
 					<?=
 					$this->render('_alert', [
@@ -64,6 +81,8 @@ use \yii\helpers\Html;
 			</div>
 		</div>
 	</div>
+</div>
+
 <?php
 $this->registerJs(<<<JS
 (function($){
@@ -72,7 +91,7 @@ $this->registerJs(<<<JS
 	$(document).on('pjax:send', function(){
 			\$bar.width(0);
 			progress = setInterval(function() {
-			$('.progress').addClass('active').removeClass('hide');
+			$('.progress').addClass('active').removeClass('invisible');
 			if (\$bar.width()>=100) {
 				clearInterval(progress);
 				$('.progress').removeClass('active');
@@ -84,7 +103,7 @@ $this->registerJs(<<<JS
 	}).on('pjax:complete', function(){
 		clearInterval(progress);
 		\$bar.width(\$bar.width()+100);
-		$('.progress').removeClass('active').addClass("hide");
+		$('.progress').removeClass('active').addClass("invisible");
 	});
 })(jQuery);
 JS

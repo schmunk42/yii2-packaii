@@ -10,6 +10,8 @@ use yii\web\Controller;
 class DefaultController extends Controller
 {
 
+    public $layout = "@yii/debug/views/layouts/main";
+
 	public function behaviors()
 	{
 		return [
