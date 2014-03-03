@@ -70,3 +70,9 @@ will be displayed.
 
 Please note that packaii is currently not executing any `composer` actions directly, but it will give you the commands
 ready to copy and paste into your console.
+
+
+Screenshots
+-----------
+
+![Packaii](https://pbs.twimg.com/media/Bh1tJ1wCAAE7du3.jpg:large)
