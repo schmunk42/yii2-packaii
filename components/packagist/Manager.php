@@ -144,13 +144,14 @@ class Manager extends Component
 				foreach ($this->_installed_packages as &$package) {
 					foreach ($this->getRequiredPackageNames() as $name => $version) {
 						if (strcasecmp($package->name, $name) === 0) {
-							// should we set the versions too ?
+							// TODO: should we set the versions too ?
+                            // TODO: The labels are of the wrong color, green => required, blue => installed as dependecy
 							$package->isRequired = true;
 						}
 					}
 					foreach ($this->getRequiredDevPackageNames() as $name => $version) {
 						if (strcasecmp($package->name, $name) === 0) {
-							// should we set the versions too ?
+							// TODO: should we set the versions too ?
 							$package->isRequiredDev = true;
 						}
 					}
