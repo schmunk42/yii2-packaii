@@ -55,7 +55,7 @@ You can add your GitHub username and password to the config:
             'gitHubPassword' => 'super_secrect'
         ],
     ],
-``
+```
 
 
 Usage
