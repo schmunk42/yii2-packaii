@@ -66,7 +66,9 @@ class Package extends Base
 		if(!empty($this->name))
 		{
 			$api = new Packagist();
-			$response = $api->search($this->name, ['tags' => ['yii2-extension']])->getResponse();
+            // TODO: see also https://github.com/composer/packagist/issues/397 Using just "yii2" gives better search
+            // results, because it does NOT find all extensions
+			$response = $api->search($this->name, ['tags' => ['yii2']])->getResponse();
 			$dataProvider->allModels = $response->getBody();
 		}
 
