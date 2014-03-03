@@ -10,7 +10,7 @@ $version = ArrayHelper::getValue($model->packagistInfo->versions, $version, rese
 <div class="row">
 	<div class="col-lg-9">
 		<h2>
-			<?= $model->name ?>
+            <span class="label label-<?= ($model->isRequired)?'success':'primary'?>"><?= $model->version; ?></span> <?= $model->name ?>
 		</h2>
 		<p class="lead">
 			<?= $model->description ?>
@@ -18,7 +18,7 @@ $version = ArrayHelper::getValue($model->packagistInfo->versions, $version, rese
 				<div>
 					<span class="glyphicon glyphicon-globe"></span> <?= Html::a($model->homepage, $model->homepage); ?>
 				</div>
-		<?php endif; ?>
+		    <?php endif; ?>
 		</p>
 
 	</div>
@@ -45,8 +45,8 @@ $version = ArrayHelper::getValue($model->packagistInfo->versions, $version, rese
 	<div class="col-md-3">
 
 		<button type="submit" class="btn btn-success" data-toggle="modal" data-target="#update-modal">
-			<?= $model->version; ?>
-			<span class="glyphicon glyphicon-download"></span>
+
+			<span class="glyphicon glyphicon-upload"></span>
 		</button>
 		<button type="submit" class="btn btn-default" data-toggle="modal" data-target="#configure-modal">
 			<span class="glyphicon glyphicon-cog"></span>
