@@ -108,45 +108,5 @@ use \cebe\gravatar\Gravatar;
 </div>
 
 
-<div class="">
-
-	<hr/>
-
-	<hr/>
-	<p>
-		<!-- Nav tabs -->
-	<ul class="nav nav-pills">
-		<li class="active">
-			<a href="#info-panel" data-toggle="pill">Info</a>
-		</li>
-		<li>
-			<a href="#readme-panel" data-toggle="pill">Readme</a>
-		</li>
-	</ul>
-
-	<!-- Tab panes -->
-	<div class="tab-content">
-		<div class="tab-pane active" id="info-panel">
-			<p></p>
-
-
-			<hr/>
-
-			<hr/>
-			<h5>Versions</h5>
-
-			<div class="row">
-
-			</div>
-			<hr/>
-		</div>
-		<div class="tab-pane" id="readme-panel">
-			<p></p>
-
-		</div>
-	</div>
-	</p>
-</div>
-
 <!-- Modal -->
 <?= $this->render('_modals', ['name' => $model->name]);
