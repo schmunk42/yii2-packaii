@@ -52,7 +52,7 @@ class Package extends Base
 		$dataProvider = new ArrayDataProvider([
 			'allModels' => $models,
 			'pagination' => [
-				'pageSize' => 50,
+				'pageSize' => 15, // using 15, like the Packagist API
 			],
 			'sort' => [
 				'attributes' => [], // to be specified
