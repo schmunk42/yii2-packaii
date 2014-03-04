@@ -3,7 +3,7 @@
 namespace schmunk42\packaii\panels;
 
 
-use Yii;
+use \Yii;
 use yii\debug\Panel;
 use yii\log\Logger;
 
@@ -31,7 +31,7 @@ class PackaiiPanel extends Panel
 	 */
 	public function getSummary()
 	{
-		return Yii::$app->view->render('@vendor/schmunk42/yii2-packaii/views/panels/summary');
+		return \Yii::$app->view->render('@vendor/schmunk42/yii2-packaii/views/panels/summary');
 	}
 
 	/**
@@ -39,7 +39,7 @@ class PackaiiPanel extends Panel
 	 */
 	public function getDetail()
 	{
-		return Yii::$app->view->render('@vendor/schmunk42/yii2-packaii/views/panels/detail');
+		return \Yii::$app->view->render('@vendor/schmunk42/yii2-packaii/views/panels/detail');
 	}
 
 	/**
