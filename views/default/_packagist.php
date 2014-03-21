@@ -1,6 +1,7 @@
 <?php
 use \yii\widgets\Pjax;
 use \yii\helpers\Html;
+use \yii\helpers\Url;
 use \schmunk42\packaii\models\search\Package;
 
 ?>
@@ -8,7 +9,7 @@ use \schmunk42\packaii\models\search\Package;
 		<?= $this->render('_search_form', [
 			'id' => 'packagist-search-form',
 			'placeholder' => 'Search Packagist',
-			'action' => Html::url(['search-packagist']),
+			'action' => Url::to(['search-packagist']),
 			'model' => new Package()
 		]); ?>
 	</p>

@@ -1,5 +1,6 @@
 <?php
 use \yii\helpers\Html;
+use \yii\helpers\Url;
 use \yii\widgets\Pjax;
 use \schmunk42\packaii\models\search\InstalledPackage;
 ?>
@@ -7,7 +8,7 @@ use \schmunk42\packaii\models\search\InstalledPackage;
 		<?= $this->render('_search_form', [
 			'id' => 'installed-search-form',
 			'placeholder' => 'Search Installed',
-			'action' => Html::url(['search-installed']),
+			'action' => Url::to(['search-installed']),
 			'model' => new InstalledPackage()
 		]); ?>
 	</p>

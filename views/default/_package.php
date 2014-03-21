@@ -1,6 +1,7 @@
 <?php
 use \Yii;
 use \yii\helpers\Html;
+use \yii\helpers\Url;
 
 $version = property_exists($model, 'version') ? $model->version : null;
 ?>
@@ -15,7 +16,7 @@ $version = property_exists($model, 'version') ? $model->version : null;
 		<span class="label label-warning">dev</span>
 	<?php endif; ?>
 	<?=
-	Html::a($model->name, Html::url([
+	Html::a($model->name, Url::to([
 		'detail',
 		'name' => $model->name,
 		'version' => $version
