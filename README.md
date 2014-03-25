@@ -30,7 +30,7 @@ Setup
 Once the extension is installed, load the module in your application config:
 
 ```php
-'modules'        => [
+'modules' => [
     'packaii' => [
         'class' => 'schmunk42\packaii\Module'
     ]
@@ -40,15 +40,15 @@ Once the extension is installed, load the module in your application config:
 Setup a project root alias:
 
 ```php
-'aliases'        => [
-    '@root'   => realpath(__DIR__ . '/../../'), // path to your composer.json file
-
+'aliases' => [
+    '@root' => realpath(__DIR__ . '/../../'), // path to your composer.json file
+]
 ```
 
 For easy access, we also recommend you to add the packaii panel to the debug toolbar:
 
 ```php
-'panels'     => [
+'panels' => [
     'packaii'   => ['class' => 'schmunk42\packaii\panels\PackaiiPanel',],
 ]
 ```
@@ -57,12 +57,12 @@ Since you may hit the GitHub API limit of 50 requests per hour for unauthorized 
 You can add your GitHub username and password to the config:
 
 ```php
-    'modules' => [
-        'packaii' => [
-            'gitHubUsername' => 'your_username',
-            'gitHubPassword' => 'super_secrect'
-        ],
+'modules' => [
+    'packaii' => [
+        'gitHubUsername' => 'your_username',
+        'gitHubPassword' => 'super_secrect'
     ],
+],
 ```
 
 
