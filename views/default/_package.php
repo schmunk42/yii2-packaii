@@ -24,7 +24,7 @@ $version = property_exists($model, 'version') ? $model->version : null;
 </h5>
 <div>
 	<small>
-		<?= $model->description ?>
-	</small>
+        <?= Html::encode($model->description) ?>
+    </small>
 </div>
 <hr/>

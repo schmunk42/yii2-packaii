@@ -13,7 +13,7 @@ $version = ArrayHelper::getValue($model->packagistInfo->versions, $version, rese
             <span class="label label-<?= ($model->isRequired)?'success':'primary'?>"><?= $model->version; ?></span> <?= $model->name ?>
 		</h2>
 		<p class="lead">
-			<?= $model->description ?>
+            <?= Html::encode($model->description) ?>
 			<?php if (isset($model->homepage)): ?>
 				<div>
 					<span class="glyphicon glyphicon-globe"></span> <?= Html::a($model->homepage, $model->homepage); ?>
