@@ -37,6 +37,14 @@ Once the extension is installed, load the module in your application config:
     ]
 ```
 
+Setup a project root alias:
+
+```php
+    'aliases'        => [
+        '@root'   => realpath(__DIR__ . '/../../'), // path to your composer.json file
+
+```
+
 For easy access, we also recommend you to add the packaii panel to the debug toolbar:
 
 ```php
@@ -70,6 +78,12 @@ will be displayed.
 
 Please note that packaii is currently not executing any `composer` actions directly, but it will give you the commands
 ready to copy and paste into your console.
+
+
+Troubleshooting
+---------------
+
+Open http://your-application/index.php?r=debug/default/view&panel=packaii to check the module status.
 
 
 Screenshots

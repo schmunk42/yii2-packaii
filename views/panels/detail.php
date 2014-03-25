@@ -11,26 +11,22 @@ use \yii\helpers\Html;
         browsing packages.
     </p>
 
-<h2>Status Checks</h2>
-<?php if (!Yii::$app->getModule('packaii')->gitHubUsername || !Yii::$app->getModule('packaii')->gitHubPassword): ?>
-    <?=
-    $this->render(
-        '@vendor/schmunk42/yii2-packaii/views/default/_alert',
-        [
-            'type'    => 'warning',
-            'message' => '<strong>Important</strong> <p>In order to avoid github calls limitations, it is recommended
-					that you configure <strong>Packaii::gitHubUsernanme</strong> and <strong>Packaii::gitHubPassword</strong>
-					module on your config file.</p> <br> More information on ' .
-                Html::a('GitHub Developer', 'https://developer.github.com/changes/2012-10-14-rate-limit-changes/')
-        ]
-    );?>
-<?php else: ?>
-    <?=
-    $this->render(
+    <h2>Status Checks</h2>
+<?php
+if (\Yii::$app->getModule('packaii')->hasMessages()):
+    foreach (\Yii::$app->getModule('packaii')->getMessages() as $message) {
+        echo $this->render(
+            '@vendor/schmunk42/yii2-packaii/views/default/_alert',
+            $message
+        );
+    }
+else:
+    echo $this->render(
         '@vendor/schmunk42/yii2-packaii/views/default/_alert',
         [
             'type'    => 'success',
-            'message' => 'Everything is running fine.'
+            'message' => 'Everything is configured correctly.'
         ]
-    );?>
-<?php endif; ?>
+    );
+endif;
+?>
