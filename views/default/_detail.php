@@ -8,7 +8,7 @@ $version = ArrayHelper::getValue($model->packagistInfo->versions, $version, rese
 ?>
 
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-sm-9">
             <h2>
                 <span class="label label-<?=
                 ($model->isRequired) ? 'success' :
@@ -29,7 +29,7 @@ $version = ArrayHelper::getValue($model->packagistInfo->versions, $version, rese
     </div>
 
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-sm-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Readme</h3>
@@ -44,7 +44,7 @@ $version = ArrayHelper::getValue($model->packagistInfo->versions, $version, rese
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-sm-3">
 
             <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#update-modal">
                 <span class="glyphicon glyphicon-upload"></span>

@@ -39,7 +39,7 @@ use \Yii;
                 <p>
                     <code>
                         cd <?= realpath(Yii::getAlias('@root')) ?><br/>
-                        composer.phar require <?= $name ?>
+                        composer.phar require "<?= $name ?>"
                     </code>
                 </p>
 
@@ -87,7 +87,7 @@ use \Yii;
             </div>
             <div class="modal-body">
                 <p>
-                    To install this extension please use the following commands
+                    To remove this extension please use the following procedure
                 </p>
 
                 <p>
@@ -98,7 +98,7 @@ use \Yii;
                 </p>
 
                 <p>
-                    And update your application
+                    Remove the package from require or require-dev and update your application
                 </p>
 
                 <p>

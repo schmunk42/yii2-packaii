@@ -24,28 +24,25 @@ use \cebe\gravatar\Gravatar;
                 <?php foreach ($model->versions as $version => $info): ?>
                     <div class="col-xs-6 col-md-6">
                         <div class="well">
-                            <h4><?= $version ?>
-                                <small><?= implode(", ", $info->license) ?></small>
+                            <h4>
+                                <?= $version ?>
                             </h4>
-                            <small><?= $info->time ?></small>
-
+                            <span class="label label-info"><?= implode(", ", $info->license) ?></span>
+                            <small><?= \Yii::$app->formatter->asDate($info->time) ?></small>
                             <?php
                             foreach ($info->authors AS $author) {
                                 echo "<p>";
-                                echo($author->name ? $author->name : '');
-                                if ($author->email) {
-
-                                    echo " <" .
-                                        Html::a(
-                                            $author->email,
-                                            ($author->homepage ? $author->homepage : '#')
-                                        )
-                                        . ">";
+                                if ($author->name) {
+                                    echo Html::a(
+                                        $author->name,
+                                        ($author->homepage ? $author->homepage : '#')
+                                    );
                                 }
+                                echo ' <small>'.($author->email ? $author->email  : '').'</small>';
                                 echo "</p>";
                             }
                             ?>
-
+                            <hr>
                             <button type="submit" class="btn btn-success" data-toggle="modal"
                                     data-target="#install-modal">
                                 Install
