@@ -3,25 +3,15 @@ use \Yii;
 use \yii\helpers\Html;
 
 ?>
-    <p class="well">
-        <?= Yii::$app->getModule('packaii')->manager->getInstalledPackagesCount(); ?> Packages Installed<br>
-        <?= Yii::$app->getModule('packaii')->manager->getDevPackagesCount(); ?> Dev-Packages<br>
-        Composer Hash: <?= Yii::$app->getModule('packaii')->manager->getComposerLockHash(); ?>
-    </p>
+    <h1>Packaii
+        <small>Information</small>
+    </h1>
     <p>
-        <?=
-        $this->render(
-            '@vendor/schmunk42/yii2-packaii/views/default/_alert',
-            [
-                'type'    => 'info',
-                'message' => '<strong>Packaii</strong> Your composer package toolkit. ' . Html::a(
-                        'Go to dashboard',
-                        ['/packaii']
-                    )
-            ]
-        ); ?>
-
+        This is the debug status panel of packaii. Please visit the <?= Html::a('Go to dashboard', ['/packaii']) ?> for
+        browsing packages.
     </p>
+
+<h2>Status Checks</h2>
 <?php if (!Yii::$app->getModule('packaii')->gitHubUsername || !Yii::$app->getModule('packaii')->gitHubPassword): ?>
     <?=
     $this->render(
@@ -32,6 +22,15 @@ use \yii\helpers\Html;
 					that you configure <strong>Packaii::gitHubUsernanme</strong> and <strong>Packaii::gitHubPassword</strong>
 					module on your config file.</p> <br> More information on ' .
                 Html::a('GitHub Developer', 'https://developer.github.com/changes/2012-10-14-rate-limit-changes/')
+        ]
+    );?>
+<?php else: ?>
+    <?=
+    $this->render(
+        '@vendor/schmunk42/yii2-packaii/views/default/_alert',
+        [
+            'type'    => 'success',
+            'message' => 'Everything is running fine.'
         ]
     );?>
 <?php endif; ?>
