@@ -21,6 +21,10 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
+        // auto-configure alias @root, if not set in config
+        if (\Yii::getAlias('@root',false) === false) {
+            \Yii::setAlias('@root', __DIR__.'/../../..');
+        }
         $this->validateSettings();
     }
 
