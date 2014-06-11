@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "yiisoft/yii2-debug": "dev-master",
+        "yiisoft/yii2-debug": "*",
         "cebe/yii2-gravatar": "1.*",
         "cebe/markdown": "0.9.*",
         "2amigos/yii2-packagist-component": "0.1.*",
