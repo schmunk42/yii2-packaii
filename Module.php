@@ -8,7 +8,7 @@ use schmunk42\packaii\components\packagist\Manager;
 use yii\base\BootstrapInterface;
 use yii\helpers\Html;
 
-class Module extends \yii\base\Module implements BootstrapInterface
+class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'schmunk42\packaii\controllers';
 
@@ -18,19 +18,6 @@ class Module extends \yii\base\Module implements BootstrapInterface
 
     private $_manager;
     private $_messages = [];
-
-    /**
-     * Register module as `packaii`
-     * @param \yii\base\Application $app
-     */
-    public function bootstrap($app){
-        $app->setModule(
-            'packaii',
-            [
-                'class' => 'schmunk42\packaii\Module'
-            ]
-        );
-    }
 
     public function init()
     {

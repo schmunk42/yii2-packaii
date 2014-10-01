@@ -29,6 +29,6 @@
         "2amigos/yii2-pjax-filter-behavior": "0.1.*"
     },
     "extra": {
-        "bootstrap": "schmunk42\\packaii\\Module"
+        "bootstrap": "schmunk42\\packaii\\Bootstrap"
     }
 }
