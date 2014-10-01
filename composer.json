@@ -2,6 +2,7 @@
     "name": "schmunk42/yii2-packaii",
     "description": "Yii2 Framework Web-UI for browsing composer packages",
     "license": "BSD-3-Clause",
+    "type": "yii2-extension",
     "authors": [
         {
             "name": "Tobias Munk",
