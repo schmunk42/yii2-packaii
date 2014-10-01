@@ -4,7 +4,7 @@ use \yii\widgets\Pjax;
 use \yii\helpers\Html;
 
 ?>
-    <div class="container">
+    <div class="">
         <div class="packaii-default-index">
             <h1>Packaii
                 <small>composer package browser</small>
@@ -80,8 +80,9 @@ use \yii\helpers\Html;
                             'packaii'
                         )->gitHubPassword
                     ): ?>
-                        <?=
-                        $this->render(
+                        <?
+                        // TODO - fixme
+                        /*$this->render(
                             '_alert',
                             [
                                 'type'    => 'warning',
@@ -93,7 +94,7 @@ use \yii\helpers\Html;
                                         'https://developer.github.com/changes/2012-10-14-rate-limit-changes/'
                                     )
                             ]
-                        );?>
+                        );*/?>
                     <?php endif; ?>
                     <?php Pjax::end(); ?>
                 </div>

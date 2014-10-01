@@ -32,7 +32,7 @@ $version = property_exists($model, 'version') ? $model->version : null;
 </h5>
 <div>
     <small>
-        <?= Html::encode($model->description) ?>
+        <?php // TODO - fixme = Html::encode($model->description) ?>
     </small>
 </div>
 <hr/>
