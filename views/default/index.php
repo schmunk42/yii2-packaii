@@ -6,9 +6,7 @@ use \yii\helpers\Html;
 ?>
     <div class="">
         <div class="packaii-default-index">
-            <h1>Packaii
-                <small>composer package browser</small>
-            </h1>
+            <h1>Composer packages</h1>
 
             <div class="row">
                 <div class="col-md-3">
