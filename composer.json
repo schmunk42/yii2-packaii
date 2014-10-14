@@ -23,7 +23,7 @@
     "require": {
         "yiisoft/yii2-debug": "*",
         "cebe/yii2-gravatar": "1.*",
-        "cebe/markdown": "0.9.*",
+        "cebe/markdown": "1.*",
         "2amigos/yii2-packagist-component": "0.1.*",
         "2amigos/yii2-arrayquery-component": "0.1.*",
         "2amigos/yii2-pjax-filter-behavior": "0.1.*"
