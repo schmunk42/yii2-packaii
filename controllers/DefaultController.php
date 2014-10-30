@@ -71,7 +71,7 @@ class DefaultController extends Controller
 			$view = '_detail';
 		}
 		if ($readme == null) {
-			return $this->renderpartial('_alert', [
+			return $this->renderPartial('_alert', [
 				'type' => 'warning',
 				'message' => 'Package README file not available for <strong>' . $name . '</strong>'
 			]);
