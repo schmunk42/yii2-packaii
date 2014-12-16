@@ -9,7 +9,6 @@
 
 namespace schmunk42\packaii;
 
-use yii\base\Application;
 use yii\base\BootstrapInterface;
 
 /**
@@ -21,14 +20,18 @@ class Bootstrap implements BootstrapInterface
 {
     /**
      * Register module as `packaii`
+     *
      * @param \yii\base\Application $app
      */
-    public function bootstrap($app){
-        $app->setModule(
-            'packaii',
-            [
-                'class' => 'schmunk42\packaii\Module'
-            ]
-        );
+    public function bootstrap($app)
+    {
+        if (!$app->hasModule('packaii')) {
+            $app->setModule(
+                'packaii',
+                [
+                    'class' => 'schmunk42\packaii\Module'
+                ]
+            );
+        }
     }
 }
